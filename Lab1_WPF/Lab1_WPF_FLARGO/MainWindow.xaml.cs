@@ -44,6 +44,8 @@ namespace Lab01
                 m_SelectedPerson = value;
                 BoxWithPicture.Source = new BitmapImage(
                 new Uri(m_SelectedPerson.Picture));
+                Selected_Age.Text =m_SelectedPerson.Age.ToString();
+                Selected_name.Text = m_SelectedPerson.Name;
             }
         }
         public MainWindow()
@@ -81,6 +83,8 @@ namespace Lab01
 
                 string filename = dlg.FileName;
                 PictureBox.Text = filename;
+                BoxWithPicture.Source = new BitmapImage(
+                new Uri(filename));
             }
         }
     }
