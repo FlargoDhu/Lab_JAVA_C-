@@ -1,0 +1,46 @@
+﻿<Window x:Class="Lab2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab2"
+        mc:Ignorable="d"
+        Title="Miotacz Slajdów" Height="450" Width="889.241">
+    <Grid Margin="0,0,18,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ListBox Name="ListaLudzi" Margin="20" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedPerson}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=Name}" Width="100"/>
+                        <TextBlock Text="{Binding Path=Age}" Width="100"/>
+                        <Image Source="{Binding Path=Picture}" Width="100" Height="40"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Margin="22,142,224,20" Orientation="Vertical" HorizontalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1">
+            <TextBlock TextWrapping="Wrap" Text="Name"/>
+            <TextBox x:Name ="nameTextBox" Height="23" TextWrapping="Wrap" Text="" Margin="0,0,0,10"/>
+            <TextBlock TextWrapping="Wrap" Text="Age"/>
+            <TextBox x:Name="ageTextBox" Height="23" TextWrapping="Wrap" Text=""  Margin="0,0,0,10"/>
+            <TextBlock TextWrapping="Wrap" Text="Picture Path" HorizontalAlignment="Left" Width="182"/>
+            <TextBox x:Name="PictureBox" Height="21" TextWrapping="Wrap" Text=""  Margin="0,0,0,10"/>
+        </StackPanel>
+        <StackPanel Margin="22,20,0,276.558" Orientation="Vertical" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" HorizontalAlignment="Left" Width="169.616">
+            <TextBlock TextWrapping="Wrap" Width="164.467" Height="26"><Run Text="Selected_Age"/></TextBlock>
+            <TextBox x:Name ="Selected_Age" TextWrapping="Wrap" Text="" Height="23" Width="164.467" BorderBrush="{x:Null}"/>
+            <TextBlock TextWrapping="Wrap" Height="29" Width="164.467"><Run Text="Selected_Name"/></TextBlock>
+            <TextBox x:Name ="Selected_name" TextWrapping="Wrap" Text="" Height="23" Width="164.467" BorderBrush="{x:Null}"/>
+        </StackPanel>
+        <StackPanel Margin="211.533,20,20,231" Orientation="Vertical" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1">
+            <Image x:Name="BoxWithPicture" Stretch="Fill" Height="206" HorizontalAlignment="Left" Width="233" Source ="Binding SelectedPerson.Picture" Margin="0" VerticalAlignment="Top" RenderTransformOrigin="0.507,0.498"/>
+        </StackPanel>
+        <Button x:Name = "addNewPersonButton" Content="Add new person" Click="AddNewPersonButton_Click" Margin="22,365,184,20" Grid.Column="1"/>
+        <Button x:Name = "LoadPicture" Content="Load Picture" Click="LoadPicture_Click" Margin="22,315,309,70" Grid.Column="1"/>
+        <Button x:Name="buttonImageRandom" Content="Random image" Margin="138,315,184,70" Grid.Column="1" Click="ButtonImageRandom_Click"/>
+    </Grid>
+</Window>
