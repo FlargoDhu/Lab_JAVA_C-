@@ -148,25 +148,28 @@ namespace Lab2
             }
         }
 
-        private  Task FindSomeImage()
+        private  Task FindSomeImage(string rand)
         {
             return Task.Factory.StartNew(()=>{
-                var _img = new RandomImage().ToBitmap();
+                var _img = new RandomImage(rand).ToBitmap();
                 randomImage = _img;
                 Dispatcher.BeginInvoke((Action)(() => BoxWithPicture.Source = ImageSourceForBitmap(randomImage)));
             });
         }
-                                   
+        private readonly List<string> _topics = new List<string> { "dog", "car", "truck", "cat", "florida" };
         private async void ButtonImageRandom_Click(object sender, RoutedEventArgs e)
         {
-            
+           
             try
             {
-                await FindSomeImage();
+
+                var rnd = new Random();
+                int topic = rnd.Next(0, _topics.Count - 1);
+                await FindSomeImage(_topics[topic]);
 
                 PictureBox.Text = "random";
                 ageTextBox.Text = randomImage.Width.ToString();
-                nameTextBox.Text = randomImage.Height.ToString();
+                nameTextBox.Text = _topics[topic];
                 AddNewPersonButton_Click(sender, e);
 
             }

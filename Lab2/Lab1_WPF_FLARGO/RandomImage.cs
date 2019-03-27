@@ -15,16 +15,13 @@ namespace Lab2
 {
     class RandomImage
     {
-        private readonly List<string> _topics = new List<string> { "dog", "car", "truck", "cat", "florida" };
+       
 
         public Image Image { get; set; }
-        private string GetHtmlCode()
+        private string GetHtmlCode(string rand)
         {
-            var rnd = new Random();
 
-            int topic = rnd.Next(0, _topics.Count - 1);
-
-            string url = "https://www.google.com/search?q=" + _topics[topic] + "&tbm=isch";
+            string url = "https://www.google.com/search?q=" + rand + "&tbm=isch";
             string data = "";
 
             var request = (HttpWebRequest)WebRequest.Create(url);
@@ -80,9 +77,9 @@ namespace Lab2
             }
             
         }
-        public RandomImage()
+        public RandomImage(string rand)
         {
-            string html = GetHtmlCode();
+            string html = GetHtmlCode(rand);
             List<string> urls = GetUrls(html);
             var rnd = new Random();
 
