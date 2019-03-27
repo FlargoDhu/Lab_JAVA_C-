@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -20,9 +22,12 @@ using System.Windows.Shapes;
 
 namespace Lab2
 {
+ 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
+
     public partial class MainWindow : Window
     {
         ObservableCollection<Person> people = new ObservableCollection<Person>
@@ -30,8 +35,6 @@ namespace Lab2
             /*new Person { Name = "P1", Age = 1 },
             new Person { Name = "P2", Age = 2 }
         */};
-
-
 
         private System.Drawing.Bitmap randomImage;
 
@@ -55,11 +58,10 @@ namespace Lab2
                 Selected_name.Text = m_SelectedPerson.Name;
                 if (m_SelectedPerson.image == null)
                 {
-                    BoxWithPicture.Source = new BitmapImage(new Uri(m_SelectedPerson.PicturePath));          
+                    BoxWithPicture.Source = m_SelectedPerson.PicturePath;          
                 }
                 else
-                {
-                    
+                {                  
                     BoxWithPicture.Source = ImageSourceForBitmap(m_SelectedPerson.image);
                 }
                 
@@ -67,6 +69,7 @@ namespace Lab2
         }
 
         
+
         [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DeleteObject([In] IntPtr hObject);
@@ -80,19 +83,41 @@ namespace Lab2
             }
             finally { DeleteObject(handle); }
         }
+
+        private BitmapSource Bitmap2BitmapImage(Bitmap bitmap)
+        {
+            BitmapSource i = Imaging.CreateBitmapSourceFromHBitmap(
+                           bitmap.GetHbitmap(),
+                           IntPtr.Zero,
+                           Int32Rect.Empty,
+                           BitmapSizeOptions.FromEmptyOptions());
+            return (BitmapSource)i;
+        }
+
+
+
         public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
         }
-        
         private async void AddNewPersonButton_Click(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrWhiteSpace(ageTextBox.Text) == false && String.IsNullOrWhiteSpace(nameTextBox.Text) == false && String.IsNullOrWhiteSpace(PictureBox.Text) == false)
             {
-                Person person = new Person { Age = int.Parse(ageTextBox.Text), Name = nameTextBox.Text, PicturePath = (PictureBox.Text) };
+                Person person = new Person { Age = int.Parse(ageTextBox.Text), Name = nameTextBox.Text, ImageName = PictureBox.Text };
                 if (PictureBox.Text == "random")
-                    person.image =  randomImage;
+                {
+                    
+                    person.image = randomImage;
+                    person.PicturePath = Bitmap2BitmapImage(randomImage);
+          
+                    
+                }
+                else
+                {
+                    person.PicturePath = (BitmapSource)(new BitmapImage(new Uri(PictureBox.Text)));
+                }
                 people.Add(person);
             }
             else
