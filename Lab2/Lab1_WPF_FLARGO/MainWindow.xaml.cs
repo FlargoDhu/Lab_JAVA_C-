@@ -86,7 +86,7 @@ namespace Lab2
             DataContext = this;
         }
         
-        private void AddNewPersonButton_Click(object sender, RoutedEventArgs e)
+        private async void AddNewPersonButton_Click(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrWhiteSpace(ageTextBox.Text) == false && String.IsNullOrWhiteSpace(nameTextBox.Text) == false && String.IsNullOrWhiteSpace(PictureBox.Text) == false)
             {
@@ -123,24 +123,28 @@ namespace Lab2
             }
         }
 
-        public async Task<Bitmap> FindSomeImage()
+        private  Task FindSomeImage()
         {
-            var img = new RandomImage().ToBitmap();
-            BoxWithPicture.Source = ImageSourceForBitmap(img);
-
-            return img;      
+            return Task.Factory.StartNew(()=>{
+                var _img = new RandomImage().ToBitmap();
+                randomImage = _img;
+                Dispatcher.BeginInvoke((Action)(() => BoxWithPicture.Source = ImageSourceForBitmap(randomImage)));
+            });
         }
-      
+                                   
         private async void ButtonImageRandom_Click(object sender, RoutedEventArgs e)
         {
+            
             try
             {
-                randomImage = await FindSomeImage();
+                await FindSomeImage();
+
                 PictureBox.Text = "random";
+
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("RandomImage asyns error");
+                MessageBox.Show("RandomImage asyns error:"+ex.Message);
             }
 
             
