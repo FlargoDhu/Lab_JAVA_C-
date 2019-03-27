@@ -12,8 +12,8 @@ namespace Lab2
     {
         public string Name { get; set; }
         public int Age { get; set; }
-        public string PicturePath { get; set; }
-
+        public BitmapSource PicturePath { get; set; }
+        public string ImageName { get; set; }
         public Bitmap image;
     }
 }

@@ -17,7 +17,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Path=Name}" Width="100"/>
                         <TextBlock Text="{Binding Path=Age}" Width="100"/>
-                        <Image Source="{Binding Path=Picture}" Width="100" Height="40"/>
+                        <Image  Source="{Binding Path=PicturePath}"  Width="100" Height="40"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
