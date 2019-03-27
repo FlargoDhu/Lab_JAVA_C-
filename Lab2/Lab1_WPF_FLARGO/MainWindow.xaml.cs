@@ -165,6 +165,9 @@ namespace Lab2
                 await FindSomeImage();
 
                 PictureBox.Text = "random";
+                ageTextBox.Text = randomImage.Width.ToString();
+                nameTextBox.Text = randomImage.Height.ToString();
+                AddNewPersonButton_Click(sender, e);
 
             }
             catch (Exception ex)
