@@ -167,10 +167,14 @@ namespace Lab2
                 int topic = rnd.Next(0, _topics.Count - 1);
                 await FindSomeImage(_topics[topic]);
 
-                PictureBox.Text = "random";
-                ageTextBox.Text = randomImage.Width.ToString();
-                nameTextBox.Text = _topics[topic];
-                AddNewPersonButton_Click(sender, e);
+                Person person = new Person { Age = randomImage.Width, Name = _topics[topic], ImageName = PictureBox.Text };
+                person.image = randomImage;
+                person.PicturePath = Bitmap2BitmapImage(randomImage);
+                people.Add(person);
+                //PictureBox.Text = "random";
+                //ageTextBox.Text = randomImage.Width.ToString();
+                //nameTextBox.Text = _topics[topic];
+                //AddNewPersonButton_Click(sender, e);
 
             }
             catch (Exception ex)
