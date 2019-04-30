@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace StockApp
 {
@@ -26,7 +27,7 @@ namespace StockApp
             InitializeComponent();
             DataContext = this;
 
-          
+
             foreach (var item in new DataServices.SymbolList().GetList())
             {
                 symbols.Add(item);
@@ -38,8 +39,8 @@ namespace StockApp
         /// </summary>
         private ObservableCollection<Symbol> symbols = new ObservableCollection<Symbol>();
 
-        
-     
+
+
 
 
         private Task LoadStock(string symbol)
@@ -55,20 +56,20 @@ namespace StockApp
                     AddSymbol(stock);
                     LoadLogo(stock.CompanyName);
                 }));
-                
+
             });
         }
         private void AddSymbol(Stock stock)
         {
-            
-                var service = new DataServices.AddPrice(stock);
-                if (service.New())
-                    symbols.Add(service.item);
-           
+
+            var service = new DataServices.AddPrice(stock);
+            if (service.New())
+                symbols.Add(service.item);
+
         }
         private async void LoadPrice_Click(object sender, RoutedEventArgs e)
         {
-            
+
             try
             {
                 await LoadStock(SymbolSelectBox.Text);
@@ -81,26 +82,26 @@ namespace StockApp
 
         }
 
-        private  Task LoadLogo(string name)
+        private Task LoadLogo(string name)
         {
             return Task.Factory.StartNew(() => {
                 var finder = new Logo() { Topic = name };
                 finder.FindLogo();
                 Dispatcher.BeginInvoke((Action)(() => LogoImage.Source = finder.GetLogo()));
             });
-            
+
         }
 
         private Task DisplaySymbols()
         {
             return Task.Factory.StartNew(() => {
-                
 
-                
+
+
                 Dispatcher.BeginInvoke((Action)(() => { DataBox.ItemsSource = symbols; }));
 
             });
-            
+
         }
 
         private void DataBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -110,7 +111,32 @@ namespace StockApp
 
         private async void SymbolsButton_Click(object sender, RoutedEventArgs e)
         {
-          await DisplaySymbols();
+            await DisplaySymbols();
+        }
+        private async void Complain_Click(object sender, RoutedEventArgs e)
+        {
+   
+           await DoWorkTimer();
+        }
+   
+       
+        System.Windows.Threading.DispatcherTimer _timer = new DispatcherTimer();
+
+        private async Task DoWorkTimer()
+        {
+            _timer.Interval = TimeSpan.FromMilliseconds(200);
+            _timer.Tick += _timer_Tick;
+            _timer.IsEnabled = true;
+            await Task.Delay(200);
+        }
+
+        void _timer_Tick(object sender, EventArgs e)
+        {
+            // do the work in the loop
+            string newData = DateTime.Now.ToLongTimeString();
+
+            // update the UI on the UI thread
+            txtTicks.Text = "TIMER - " + newData;
         }
     }
 }
