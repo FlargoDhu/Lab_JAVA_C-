@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:local="clr-namespace:StockApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="875" Width="1489.5">
@@ -36,6 +37,7 @@
             <TextBlock TextWrapping="Wrap" Text="Price " FontWeight="Bold"/>
             <TextBlock x:Name="SelectedPrice" TextWrapping="Wrap"/>
         </StackPanel>
+        <oxy:PlotView Model="{Binding Model}" Grid.Column="1" Margin="470.785,0,52.953,0"/>
         <Button x:Name="LoadPrice" Content="Add Symbol" HorizontalAlignment="Left" Margin="82,180,0,0" VerticalAlignment="Top" Width="186" Click="LoadPrice_Click" Grid.Column="1" Height="28"/>
         <TextBox x:Name="SymbolSelectBox" HorizontalAlignment="Left" Height="43" Margin="82,104,0,0" TextWrapping="Wrap" Text="AAPL , AMD,  F" VerticalAlignment="Top" Width="186" Grid.Column="1"/>
         <TextBlock HorizontalAlignment="Left" Margin="82,64,0,0" TextWrapping="Wrap" Text="Symbol name" VerticalAlignment="Top" Height="30" Width="186" Grid.Column="1"/>
