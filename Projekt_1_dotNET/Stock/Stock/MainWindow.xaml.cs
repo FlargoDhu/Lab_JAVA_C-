@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockApp.DataServices;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -110,7 +111,56 @@ namespace StockApp
 
         private async void SymbolsButton_Click(object sender, RoutedEventArgs e)
         {
-          await DisplaySymbols();
+            await DisplaySymbols();
+        }
+
+        private async void SymbolHistory_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await AddHistory(SymbolSelectBox.Text);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private Task AddHistory(string symbol)
+        {
+            return Task.Factory.StartNew(async () => {
+                string data = await StockHistoryConnection.LoadDataAsync(symbol);
+                List<StockHistory> history = StockHistoryReader.Read(data);
+                var service = new AddHistory(symbol);
+                service.Add(history);
+               
+                
+
+            });
+        }
+
+        private async void ShowSymbolHistory_Click(object sender, RoutedEventArgs e)
+        {
+            await ShowHistory(SymbolSelectBox.Text);
+
+        }
+        private Task ShowHistory(string symbol)
+        {
+            return Task.Factory.StartNew(async () => {
+                var finder = new HistoryList(symbol);
+                var list = finder.GetList();
+
+                await Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    //SelectedName.Text = stock.CompanyName;
+                    // SelectedSymbol.Text = stock.Symbol;
+                    //SelectedPrice.Text = stock.priceToSales.ToString();
+                    //AddSymbol(stock);
+                    //LoadLogo(stock.CompanyName);
+                }));
+
+            });
         }
     }
 }

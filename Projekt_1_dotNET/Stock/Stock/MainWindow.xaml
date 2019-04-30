@@ -36,10 +36,12 @@
             <TextBlock TextWrapping="Wrap" Text="Price " FontWeight="Bold"/>
             <TextBlock x:Name="SelectedPrice" TextWrapping="Wrap"/>
         </StackPanel>
-        <Button x:Name="LoadPrice" Content="Add Symbol" HorizontalAlignment="Left" Margin="82,180,0,0" VerticalAlignment="Top" Width="186" Click="LoadPrice_Click" Grid.Column="1" Height="28"/>
+        <Button x:Name="LoadPrice" Content="Add Symbol" HorizontalAlignment="Left" Margin="82.4,161,0,0" VerticalAlignment="Top" Width="186" Click="LoadPrice_Click" Grid.Column="1" Height="28"/>
         <TextBox x:Name="SymbolSelectBox" HorizontalAlignment="Left" Height="43" Margin="82,104,0,0" TextWrapping="Wrap" Text="AAPL , AMD,  F" VerticalAlignment="Top" Width="186" Grid.Column="1"/>
         <TextBlock HorizontalAlignment="Left" Margin="82,64,0,0" TextWrapping="Wrap" Text="Symbol name" VerticalAlignment="Top" Height="30" Width="186" Grid.Column="1"/>
         <Button x:Name="ButtonSymbols" Content="Show Symbols" Grid.Column="1" HorizontalAlignment="Left" Margin="82,246,0,0" VerticalAlignment="Top" Width="186" Height="28" Click="SymbolsButton_Click"/>
+        <Button x:Name="SymbolHistory" Content="Add History" Grid.Column="1" HorizontalAlignment="Left" Margin="82.4,194,0,0" VerticalAlignment="Top" Width="186" Height="26" Click="SymbolHistory_Click"/>
+        <Button x:Name="ButtonSymbols_Copy" Content="Show Symbol History" Grid.Column="1" HorizontalAlignment="Left" Margin="288.4,246,0,0" VerticalAlignment="Top" Width="186" Height="28" Click="ShowSymbolHistory_Click"/>
 
     </Grid>
 </Window>

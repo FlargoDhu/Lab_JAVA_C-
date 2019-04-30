@@ -14,9 +14,18 @@ namespace StockApp
     
     public partial class Symbol
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Symbol()
+        {
+            this.History = new HashSet<History>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public string Company { get; set; }
         public Nullable<double> Price { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<History> History { get; set; }
     }
 }
