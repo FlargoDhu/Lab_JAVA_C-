@@ -10,6 +10,6 @@ namespace StockApp
     {
         public string Symbol { get; set; }
         public string CompanyName { get; set; }
-        public double priceToSales { get; set; }
+        public float priceToSales { get; set; }
     }
 }

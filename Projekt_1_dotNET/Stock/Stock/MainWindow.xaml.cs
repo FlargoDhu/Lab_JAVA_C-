@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,23 @@ namespace StockApp
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
+
+          
+            foreach (var item in new DataServices.SymbolList().GetList())
+            {
+                symbols.Add(item);
+            }
         }
+
+        /// <summary>
+        /// List Symboli wyswietlonych na ekranie
+        /// </summary>
+        private ObservableCollection<Symbol> symbols = new ObservableCollection<Symbol>();
+
+        
+     
+
 
         private Task LoadStock(string symbol)
         {
@@ -35,13 +52,23 @@ namespace StockApp
                     SelectedName.Text = stock.CompanyName;
                     SelectedSymbol.Text = stock.Symbol;
                     SelectedPrice.Text = stock.priceToSales.ToString();
+                    AddSymbol(stock);
                     LoadLogo(stock.CompanyName);
                 }));
                 
             });
         }
+        private void AddSymbol(Stock stock)
+        {
+            
+                var service = new DataServices.AddPrice(stock);
+                if (service.New())
+                    symbols.Add(service.item);
+           
+        }
         private async void LoadPrice_Click(object sender, RoutedEventArgs e)
         {
+            
             try
             {
                 await LoadStock(SymbolSelectBox.Text);
@@ -52,19 +79,38 @@ namespace StockApp
                 MessageBox.Show(ex.Message);
             }
 
-
-
         }
 
         private  Task LoadLogo(string name)
         {
             return Task.Factory.StartNew(() => {
                 var finder = new Logo() { Topic = name };
-
                 finder.FindLogo();
                 Dispatcher.BeginInvoke((Action)(() => LogoImage.Source = finder.GetLogo()));
             });
             
+        }
+
+        private Task DisplaySymbols()
+        {
+            return Task.Factory.StartNew(() => {
+                
+
+                
+                Dispatcher.BeginInvoke((Action)(() => { DataBox.ItemsSource = symbols; }));
+
+            });
+            
+        }
+
+        private void DataBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private async void SymbolsButton_Click(object sender, RoutedEventArgs e)
+        {
+          await DisplaySymbols();
         }
     }
 }
