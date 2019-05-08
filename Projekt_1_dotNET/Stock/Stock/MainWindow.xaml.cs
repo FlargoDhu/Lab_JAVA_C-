@@ -27,6 +27,7 @@ namespace StockApp
     public partial class MainWindow : Window
     {
         public PlotModel dataploter { get; set; }
+        public LinearAxis LAY;
         public MainWindow()
         {
             InitializeComponent();
@@ -152,7 +153,7 @@ namespace StockApp
         /// <returns>A PlotModel.</returns>
         /// 
         
-        private static PlotModel Plot()
+        public PlotModel Plot()
         {
            
             var plot = new PlotModel
@@ -161,15 +162,17 @@ namespace StockApp
                 Subtitle = "From last month"
             };
 
-            plot.Axes.Add(new LinearAxis
+            LAY = new OxyPlot.Axes.LinearAxis()
             {
+                Key = "yaxis",
                 Position = AxisPosition.Left,
                 Minimum = 0,
-                Maximum = 100,
+                Maximum = 200,
                 MajorStep = 10,
                 MinorStep = 20,
                 TickStyle = TickStyle.Inside
-            });
+            };
+            plot.Axes.Add(LAY);
             var startDate = DateTime.Now.AddDays(-30);
             var endDate = DateTime.Now;
 
@@ -188,7 +191,8 @@ namespace StockApp
             dataploter.Series.Clear();
             dataploter.Series.Add(new LineSeries());
             // Create Line
-            
+            Axis yAxis = dataploter.Axes.FirstOrDefault(s => s.Key == "yaxis");
+            yAxis.Zoom(history[0].Close - 20, history[0].Close + 20);
             for (int i = 0; i < history.Count; i++)
             {
                 (dataploter.Series[0] as LineSeries).Points.Add(new DataPoint(history[i].Date.ToOADate(), history[i].Close));
