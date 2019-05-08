@@ -21,8 +21,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=Name}" Width="100"/>
-                        <TextBlock Text="{Binding Path=Company}" Width="100"/>
+                        <TextBlock Text="{Binding Path=Name}" Width="50"/>
+                        <TextBlock Text="{Binding Path=Company}" Width="150"/>
                         <TextBlock  Text="{Binding Path=Price}"  Width="100"/>
                     </StackPanel>
                 </DataTemplate>
@@ -43,7 +43,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="82,64,0,0" TextWrapping="Wrap" Text="Symbol name" VerticalAlignment="Top" Height="30" Width="186" Grid.Column="1"/>
         <Button x:Name="ButtonSymbols" Content="Show Symbols" Grid.Column="1" HorizontalAlignment="Left" Margin="82,246,0,0" VerticalAlignment="Top" Width="186" Height="28" Click="SymbolsButton_Click"/>
         <Button x:Name="SymbolHistory" Content="Add History" Grid.Column="1" HorizontalAlignment="Left" Margin="82.4,194,0,0" VerticalAlignment="Top" Width="186" Height="26" Click="SymbolHistory_Click"/>
-        <Button x:Name="ButtonSymbols_Copy" Content="Show Symbol History" Grid.Column="1" HorizontalAlignment="Left" Margin="288.4,246,0,0" VerticalAlignment="Top" Width="186" Height="28" Click="ShowSymbolHistory_Click"/>
+        <!--  <Button x:Name="ButtonSymbols_Copy" Content="Show Symbol History" Grid.Column="1" HorizontalAlignment="Left" Margin="288.4,246,0,0" VerticalAlignment="Top" Width="186" Height="28" Click="ShowSymbolHistory_Click"/>-->
 
     </Grid>
 </Window>
