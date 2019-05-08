@@ -12,20 +12,13 @@ namespace StockApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Symbol
+    public partial class History
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Symbol()
-        {
-            this.History = new HashSet<History>();
-        }
-    
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Company { get; set; }
+        public Nullable<int> SymbolId { get; set; }
         public Nullable<double> Price { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<History> History { get; set; }
+        public virtual Symbol Symbol { get; set; }
     }
 }

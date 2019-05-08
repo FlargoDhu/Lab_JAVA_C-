@@ -16,7 +16,7 @@ namespace StockApp
     public partial class DatabaseEntities1 : DbContext
     {
         public DatabaseEntities1()
-            : base("name=DatabaseEntities1")
+            : base("name=DatabaseEntities2")
         {
         }
     
@@ -25,6 +25,7 @@ namespace StockApp
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<History> History { get; set; }
         public virtual DbSet<Symbol> Symbol { get; set; }
     }
 }

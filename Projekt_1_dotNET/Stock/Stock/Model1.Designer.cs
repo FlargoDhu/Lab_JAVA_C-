@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Dane\GitHub\Lab_JAVA_C-\Projekt_1_dotNET\Stock\Stock\Model.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Dane\GitHub\Lab_JAVA_C-\Projekt_1_dotNET\Stock\Stock\Model1.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
