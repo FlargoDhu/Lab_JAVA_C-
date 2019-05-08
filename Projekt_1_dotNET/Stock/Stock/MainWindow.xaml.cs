@@ -18,6 +18,7 @@ using System.Windows.Threading;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using System.Data;
 
 namespace StockApp
 {
@@ -108,11 +109,6 @@ namespace StockApp
                 Dispatcher.BeginInvoke((Action)(() => { DataBox.ItemsSource = symbols; }));
 
             });
-
-        }
-
-        private void DataBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
         }
 
