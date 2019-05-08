@@ -26,12 +26,13 @@ namespace StockApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        public PlotModel dataploter { get; set; }
         public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
-
-            this.Model = CreateNormalDistributionModel();
+            this.Model = Plot();
+            dataploter = this.Model;
             this.DataContext = this;
             foreach (var item in new DataServices.SymbolList().GetList())
             {
@@ -45,7 +46,7 @@ namespace StockApp
         private ObservableCollection<Symbol> symbols = new ObservableCollection<Symbol>();
 
 
-
+        
 
 
         private Task LoadStock(string symbol)
@@ -140,7 +141,7 @@ namespace StockApp
             string newData = DateTime.Now.ToLongTimeString();
 
             // update the UI on the UI thread
-            txtTicks.Text = "TIMER - " + newData;
+            //txtTicks.Text = "TIMER - " + newData;
         }
 
         public PlotModel Model { get; set; }
@@ -149,55 +150,51 @@ namespace StockApp
         /// Creates a model showing normal distributions.
         /// </summary>
         /// <returns>A PlotModel.</returns>
-        private static PlotModel CreateNormalDistributionModel()
+        /// 
+        
+        private static PlotModel Plot()
         {
-            // http://en.wikipedia.org/wiki/Normal_distribution
+           
             var plot = new PlotModel
             {
-                Title = "Normal distribution",
-                Subtitle = "Probability density function"
+                Title = "Symbol value",
+                Subtitle = "From last month"
             };
 
             plot.Axes.Add(new LinearAxis
             {
                 Position = AxisPosition.Left,
-                Minimum = -0.05,
-                Maximum = 1.05,
-                MajorStep = 0.2,
-                MinorStep = 0.05,
+                Minimum = 0,
+                Maximum = 100,
+                MajorStep = 10,
+                MinorStep = 20,
                 TickStyle = TickStyle.Inside
             });
-            plot.Axes.Add(new LinearAxis
-            {
-                Position = AxisPosition.Bottom,
-                Minimum = -5.25,
-                Maximum = 5.25,
-                MajorStep = 1,
-                MinorStep = 0.25,
-                TickStyle = TickStyle.Inside
-            });
-            plot.Series.Add(CreateNormalDistributionSeries(-5, 5, 0, 0.2));
-            plot.Series.Add(CreateNormalDistributionSeries(-5, 5, 0, 1));
-            plot.Series.Add(CreateNormalDistributionSeries(-5, 5, 0, 5));
-            plot.Series.Add(CreateNormalDistributionSeries(-5, 5, -2, 0.5));
+            var startDate = DateTime.Now.AddDays(-30);
+            var endDate = DateTime.Now;
+
+            var minValue = DateTimeAxis.ToDouble(startDate);
+            var maxValue = DateTimeAxis.ToDouble(endDate);
+
+            plot.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom, Minimum =minValue , Maximum = maxValue, StringFormat = "MM/d" });
+            
+            
+
             return plot;
         }
 
-        private static LineSeries CreateNormalDistributionSeries(double x0, double x1, double mean, double variance, int n = 1000)
+        private void plot(List<StockHistory> history)
         {
-            var ls = new LineSeries
+            dataploter.Series.Clear();
+            dataploter.Series.Add(new LineSeries());
+            // Create Line
+            
+            for (int i = 0; i < history.Count; i++)
             {
-                Title = string.Format("μ={0}, σ²={1}", mean, variance)
-            };
-
-            for (int i = 0; i < n; i++)
-            {
-                double x = x0 + ((x1 - x0) * i / (n - 1));
-                double f = 1.0 / Math.Sqrt(2 * Math.PI * variance) * Math.Exp(-(x - mean) * (x - mean) / 2 / variance);
-                ls.Points.Add(new DataPoint(x, f));
+                (dataploter.Series[0] as LineSeries).Points.Add(new DataPoint(history[i].Date.ToOADate(), history[i].Close));
             }
-
-            return ls;
+            dataploter.InvalidatePlot(true);
+        }
 
         private async void SymbolHistory_Click(object sender, RoutedEventArgs e)
         {
@@ -218,17 +215,17 @@ namespace StockApp
                 string data = await StockHistoryConnection.LoadDataAsync(symbol);
                 List<StockHistory> history = StockHistoryReader.Read(data);
                 var service = new AddHistory(symbol);
+                plot(history);
                 service.Add(history);
-               
                 
-
             });
         }
 
         private async void ShowSymbolHistory_Click(object sender, RoutedEventArgs e)
         {
+            
             await ShowHistory(SymbolSelectBox.Text);
-
+           
         }
         private Task ShowHistory(string symbol)
         {
@@ -238,11 +235,7 @@ namespace StockApp
 
                 await Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    //SelectedName.Text = stock.CompanyName;
-                    // SelectedSymbol.Text = stock.Symbol;
-                    //SelectedPrice.Text = stock.priceToSales.ToString();
-                    //AddSymbol(stock);
-                    //LoadLogo(stock.CompanyName);
+                
                 }));
 
             });

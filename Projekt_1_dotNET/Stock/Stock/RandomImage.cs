@@ -85,7 +85,7 @@ namespace StockApp
 
             int randomUrl = rnd.Next(0, urls.Count - 1);
 
-            string luckyUrl = urls[1];
+            string luckyUrl = urls[0];
 
             byte[] image = GetImage(luckyUrl);
             using (var ms = new MemoryStream(image))
