@@ -17,14 +17,14 @@
             <ColumnDefinition Width="1117*"/>
         </Grid.ColumnDefinitions>
         <Image x:Name="LogoImage" Stretch="Fill" Height="Auto" HorizontalAlignment="Stretch" Width="Auto"  Margin="116,10,109,138" VerticalAlignment="Stretch" RenderTransformOrigin="0.507,0.498" Grid.Column="0" Grid.RowSpan="1"/>
-        <ListBox x:Name="DataBox" SelectedItem="{Binding Path=SelectedProductType, Mode=TwoWay}" ItemsSource="{Binding symbols}" Margin="10,22,18,23" Grid.Row="1" IsSynchronizedWithCurrentItem="False" SelectionChanged="DataBox_SelectionChanged">
+        <ListBox x:Name="DataBox" SelectedItem="{Binding Path=SelectedProductType, Mode=TwoWay}" ItemsSource="{Binding symbols}" Margin="10,22,18,23" Grid.Row="1" IsSynchronizedWithCurrentItem="False" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Path=Name}" Width="50"/>
                         <TextBlock Text="{Binding Path=Company}" Width="150"/>
                         <TextBlock  Text="{Binding Path=Price}"  Width="100"/>
-                        
+
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -38,12 +38,13 @@
             <TextBlock TextWrapping="Wrap" Text="Price " FontWeight="Bold"/>
             <TextBlock x:Name="SelectedPrice" TextWrapping="Wrap"/>
         </StackPanel>
-        <oxy:PlotView x:Name ="modelx"  Model="{Binding Model}" Grid.Column="1" Margin="522,38,30,481" Grid.RowSpan="2"/>
-        <Button x:Name="LoadPrice" Content="Add Symbol" HorizontalAlignment="Left" Margin="82.4,161,0,0" VerticalAlignment="Top" Width="186" Click="LoadPrice_Click" Grid.Column="1" Height="28"/>
-        <TextBox x:Name="SymbolSelectBox" HorizontalAlignment="Left" Height="43" Margin="82,104,0,0" TextWrapping="Wrap" Text="AAPL , AMD,  F" VerticalAlignment="Top" Width="186" Grid.Column="1"/>
-        <TextBlock HorizontalAlignment="Left" Margin="82,64,0,0" TextWrapping="Wrap" Text="Symbol name" VerticalAlignment="Top" Height="30" Width="186" Grid.Column="1"/>
-        <Button x:Name="ButtonSymbols" Content="Show Symbols" Grid.Column="1" HorizontalAlignment="Left" Margin="82,246,0,0" VerticalAlignment="Top" Width="186" Height="28" Click="SymbolsButton_Click"/>
-        <Button x:Name="SymbolHistory" Content="Add History" Grid.Column="1" HorizontalAlignment="Left" Margin="82.4,194,0,0" VerticalAlignment="Top" Width="186" Height="26" Click="SymbolHistory_Click"/>
+        <oxy:PlotView x:Name ="modelx"  Model="{Binding Model}" Grid.Column="1" Margin="73.4,28,30.2,29.6"/>
+        <Button x:Name="LoadPrice" Content="Add Symbol" HorizontalAlignment="Left" Margin="73.4,152.4,0,0" VerticalAlignment="Top" Width="186" Click="LoadPrice_Click" Grid.Column="1" Height="28" Grid.Row="1"/>
+        <TextBox x:Name="SymbolSelectBox" HorizontalAlignment="Left" Height="43" Margin="72.4,95.4,0,0" TextWrapping="Wrap" Text="AAPL , AMD,  F" VerticalAlignment="Top" Width="186" Grid.Column="1" Grid.Row="1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="72.4,55.4,0,0" TextWrapping="Wrap" Text="Symbol name" VerticalAlignment="Top" Height="30" Width="186" Grid.Column="1" Grid.Row="1"/>
+        <Button x:Name="ButtonSymbols" Content="Show Symbols" Grid.Column="1" HorizontalAlignment="Left" Margin="73.4,237.4,0,0" VerticalAlignment="Top" Width="186" Height="28" Click="SymbolsButton_Click" Grid.Row="1"/>
+        <Button x:Name="SymbolHistory" Content="Show symbol history" Grid.Column="1" HorizontalAlignment="Left" Margin="73.4,185.4,0,0" VerticalAlignment="Top" Width="186" Height="26" Click="SymbolHistory_Click" Grid.Row="1"/>
+        <TextBlock x:Name="TimerText" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,30.2,22.6" Grid.Row="1" TextWrapping="Wrap" Text="Clock" Width="312" FontSize="20" FontFamily="Segoe UI Light" Height="475" VerticalAlignment="Bottom"/>
         <!--  <Button x:Name="ButtonSymbols_Copy" Content="Show Symbol History" Grid.Column="1" HorizontalAlignment="Left" Margin="288.4,246,0,0" VerticalAlignment="Top" Width="186" Height="28" Click="ShowSymbolHistory_Click"/>-->
 
     </Grid>

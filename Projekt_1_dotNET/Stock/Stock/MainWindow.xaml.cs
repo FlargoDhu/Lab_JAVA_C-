@@ -40,6 +40,7 @@ namespace StockApp
             {
                 symbols.Add(item);
             }
+            Timer();
         }
 
         /// <summary>
@@ -116,9 +117,9 @@ namespace StockApp
         {
             await DisplaySymbols();
         }
-        private async void Complain_Click(object sender, RoutedEventArgs e)
+        private async void Timer()
         {
-   
+            
            await DoWorkTimer();
         }
 
@@ -135,10 +136,23 @@ namespace StockApp
         void _timer_Tick(object sender, EventArgs e)
         {
             // do the work in the loop
-            string newData = DateTime.Now.ToLongTimeString();
+            string nowLocal = DateTime.Now.ToLongTimeString();
+            var nowUtc = DateTime.UtcNow;
+            var nowLondon = nowUtc.AddHours(1).ToLongTimeString();
+            var nowNy = nowUtc.AddHours(-4).ToLongTimeString();
+            var nowHongKong = nowUtc.AddHours(8).ToLongTimeString();
+            var nowMoscow = nowUtc.AddHours(3).ToLongTimeString();
+            var nowTokyo = nowUtc.AddHours(9).ToLongTimeString();
 
             // update the UI on the UI thread
-            //txtTicks.Text = "TIMER - " + newData;
+            TimerText.Text =
+                 "NewYork - " + nowNy + "\n"
+                + "Local - " + nowLocal + "\n"
+                + "London - " + nowLondon + "\n"
+                + "Moscow - " + nowMoscow + "\n"
+                + "HongKong - " + nowHongKong + "\n"
+                + "Tokyo - " + nowTokyo + "\n";
+
         }
 
         public PlotModel Model { get; set; }
